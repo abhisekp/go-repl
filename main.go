@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
+import "github.com/abhisekp/go-repl/permutationPrefix"
 
 func main() {
-	fmt.Println("Namaskaram, Abhisek!")
+	permutationPrefix.Setup()
 }
