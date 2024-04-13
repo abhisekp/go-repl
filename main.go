@@ -1,7 +1,9 @@
 package main
 
-import "github.com/abhisekp/go-repl/permutationPrefix"
+import (
+	"github.com/abhisekp/go-repl/bracketmatching"
+)
 
 func main() {
-	permutationPrefix.Setup()
+	bracketmatching.Run()
 }

@@ -165,9 +165,16 @@ type GameOpts struct {
 	Snakes, Ladders []Pos
 }
 
-func NewGame(options GameOpts) *Game {
-	players := make([]Player, 0, options.TotalPlayers)
-	for i := range options.TotalPlayers {
+func NewGame(options ...GameOpts) *Game {
+	option := GameOpts{
+		TotalPlayers: 2,
+	}
+	if len(options) > 1 {
+		option = options[0]
+	}
+
+	players := make([]Player, 0, option.TotalPlayers)
+	for i := range option.TotalPlayers {
 		players = append(players, Player{
 			Id: i + 1,
 		})
@@ -175,6 +182,6 @@ func NewGame(options GameOpts) *Game {
 	return &Game{
 		Players:          players,
 		CurrentPlayerIdx: 0,
-		Board:            NewBoard(BoardOpts{Snakes: options.Snakes, Ladders: options.Ladders}),
+		Board:            NewBoard(BoardOpts{Snakes: option.Snakes, Ladders: option.Ladders}),
 	}
 }
