@@ -3,11 +3,10 @@ package queue
 import (
 	"errors"
 	"fmt"
-	. "github.com/abhisekp/go-repl/node"
 	"strings"
 )
 
-type IQueue[T any] interface {
+type IQueue[T comparable] interface {
 	Enqueue(data T)
 	Dequeue()
 	Peek() T
@@ -17,7 +16,7 @@ type IQueue[T any] interface {
 	Print()
 }
 
-type Queue[T any] struct {
+type Queue[T comparable] struct {
 	_      struct{}
 	_queue []T
 }
@@ -26,9 +25,9 @@ type QueueOption struct {
 	_ struct{}
 }
 
-type QueueFn[T any] func(queue *Queue[T])
+type QueueFn[T comparable] func(queue *Queue[T])
 
-func WithCapacity[T any](capacity int) QueueFn[T] {
+func WithCapacity[T comparable](capacity int) QueueFn[T] {
 	if capacity < 0 {
 		panic(errors.New("Capacity must be greater than 0"))
 	}
@@ -37,7 +36,7 @@ func WithCapacity[T any](capacity int) QueueFn[T] {
 	}
 }
 
-func NewQueue[T any](options ...QueueFn[T]) IQueue[T] {
+func NewQueue[T comparable](options ...QueueFn[T]) IQueue[T] {
 	queue := &Queue[T]{}
 
 	for _, optionFn := range options {
@@ -56,8 +55,7 @@ func (q *Queue[T]) Dequeue() {
 		return
 	}
 
-	q._queue = q._queue[:q.Size()-2]
-
+	q._queue = q._queue[1:]
 }
 
 func (q *Queue[T]) Peek() T {
@@ -67,7 +65,7 @@ func (q *Queue[T]) Peek() T {
 		return empty
 	}
 
-	return q._queue[q.Size()-1]
+	return q._queue[0]
 }
 
 func (q *Queue[T]) Size() int {

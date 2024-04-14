@@ -1,15 +1,20 @@
 package bracketmatching
 
 import (
+	"fmt"
 	"github.com/abhisekp/go-repl/stackusingqueue"
-	"slices"
+	"strings"
 )
 
 func Run() {
-
+	fmt.Println("()[]{}:", MatchBrackets("()[]{}")) // true
+	fmt.Println("({[}]):", MatchBrackets("({[}])")) // false
+	fmt.Println("([{}]):", MatchBrackets("([{}])")) // true
+	fmt.Println("}][{", MatchBrackets("}][{"))      // false
 }
 
 func MatchBrackets(str string) bool {
+	// is Odd
 	if len(str)%2 != 0 {
 		return false
 	}
@@ -22,10 +27,8 @@ func MatchBrackets(str string) bool {
 
 	bracketsStack := stackusingqueue.NewStack[rune]()
 
-	startingBrackets := []rune{'{', '[', '('}
-
 	for _, ch := range str {
-		if slices.Contains(startingBrackets, ch) {
+		if strings.ContainsRune("{[(", ch) {
 			bracketsStack.Push(ch)
 			continue
 		}

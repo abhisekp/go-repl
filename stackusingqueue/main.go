@@ -10,6 +10,10 @@ type Stack[T comparable] struct {
 	_queue IQueue[T]
 }
 
+func (s *Stack[T]) Print() {
+	s._queue.Print()
+}
+
 func (s *Stack[T]) Push(data T) {
 	s._queue.Enqueue(data)
 	currSize := s.Size()
@@ -40,8 +44,4 @@ func NewStack[T comparable]() stack.IStack[T] {
 	return &Stack[T]{
 		_queue: NewQueue[T](),
 	}
-}
-
-func Run() {
-
 }

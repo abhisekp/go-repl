@@ -1,11 +1,12 @@
 package node
 
-type Node[T any] struct {
+type Node[T comparable] struct {
 	Data T
 	Next *Node[T]
 }
 
-type DLLNode[T any] struct {
-	Node[T]
-	Prev *Node[T]
+type DLLNode[T comparable] struct {
+	Data T
+	Prev *DLLNode[T]
+	Next *DLLNode[T]
 }
