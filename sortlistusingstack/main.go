@@ -1,14 +1,17 @@
 package sortlistusingstack
 
-import "github.com/abhisekp/go-repl/stackusingqueue"
+import (
+	"cmp"
+	"github.com/abhisekp/go-repl/stack"
+)
 
 func Run() {
 	SortListUsingStack([]int{1, 9, 3, 6, 5, 2, 0})
 }
 
-func SortListUsingStack[T comparable](unsortedList []T) (sortedList []T) {
-	s1 := stackusingqueue.NewStack[T]()
-	s2 := stackusingqueue.NewStack[T]()
+func SortListUsingStack[T cmp.Ordered](unsortedList []T) (sortedList []T) {
+	s1 := stack.NewStack[T]()
+	s2 := stack.NewStack[T]()
 
 	for _, num := range unsortedList {
 		if s1.IsEmpty() || s1.Peek() == num {
@@ -16,11 +19,21 @@ func SortListUsingStack[T comparable](unsortedList []T) (sortedList []T) {
 			continue
 		}
 
-		for s1.Peek() > num {
+		for num < s1.Peek() {
 			s2.Push(s1.Peek())
 			s1.Pop()
 		}
+
+		for !s2.IsEmpty() {
+			s1.Push(s2.Peek())
+			s2.Pop()
+		}
 	}
 
+	sortedList = make([]T, 0, len(unsortedList))
+	for !s1.IsEmpty() {
+		sortedList = append(sortedList, s1.Peek())
+		s1.Pop()
+	}
 	return
 }

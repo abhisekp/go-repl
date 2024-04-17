@@ -32,4 +32,32 @@ func TestLinkedList(t *testing.T) {
 			t.Errorf("Expected 6, got %v", ll.Pop())
 		}
 	})
+
+	t.Run("Check loop exists", func(t *testing.T) {
+		testCases := []struct {
+			input    []int
+			expected bool
+		}{
+			{
+				input:    []int{1, 2, 3, 4, 5},
+				expected: false,
+			},
+			{
+				input:    []int{1, 2, 3, 4, 5, 1},
+				expected: true,
+			},
+			{
+				input:    []int{1, 2, 3, 4, 5, 4},
+				expected: true,
+			},
+		}
+
+		for _, tc := range testCases {
+			ll := NewLinkedList[int](tc.input)
+			ll.Print()
+			if ll.IsLoopPresent() != tc.expected {
+				t.Errorf("Expected %v, got %v", tc.expected, ll.IsLoopPresent())
+			}
+		}
+	})
 }

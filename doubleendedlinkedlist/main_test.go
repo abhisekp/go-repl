@@ -10,7 +10,7 @@ func TestDoubleEndedLinkedList(t *testing.T) {
 		dll.InsertAtHead(3)
 
 		if dll.Head().Data != 3 {
-			t.Errorf("Head() = %v, want %v", dll.Head().Data, 3)
+			t.Errorf("head() = %v, want %v", dll.Head().Data, 3)
 		}
 	})
 }

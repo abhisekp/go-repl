@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-type IQueue[T comparable] interface {
+type IQueue[T any] interface {
 	Enqueue(data T)
 	Dequeue()
 	Peek() T
@@ -16,7 +16,7 @@ type IQueue[T comparable] interface {
 	Print()
 }
 
-type Queue[T comparable] struct {
+type Queue[T any] struct {
 	_      struct{}
 	_queue []T
 }
@@ -25,9 +25,9 @@ type QueueOption struct {
 	_ struct{}
 }
 
-type QueueFn[T comparable] func(queue *Queue[T])
+type QueueFn[T any] func(queue *Queue[T])
 
-func WithCapacity[T comparable](capacity int) QueueFn[T] {
+func WithCapacity[T any](capacity int) QueueFn[T] {
 	if capacity < 0 {
 		panic(errors.New("Capacity must be greater than 0"))
 	}
@@ -36,7 +36,7 @@ func WithCapacity[T comparable](capacity int) QueueFn[T] {
 	}
 }
 
-func NewQueue[T comparable](options ...QueueFn[T]) IQueue[T] {
+func NewQueue[T any](options ...QueueFn[T]) IQueue[T] {
 	queue := &Queue[T]{}
 
 	for _, optionFn := range options {

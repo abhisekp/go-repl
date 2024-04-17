@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-type IStack[T comparable] interface {
+type IStack[T any] interface {
 	Push(data T)
 	Pop()
 	Peek() T
@@ -14,11 +14,11 @@ type IStack[T comparable] interface {
 	Print()
 }
 
-func NewStack[T comparable]() IStack[T] {
+func NewStack[T any]() IStack[T] {
 	return &Stack[T]{}
 }
 
-type Stack[T comparable] struct {
+type Stack[T any] struct {
 	_      struct{}
 	_stack []T
 }
