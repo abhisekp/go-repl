@@ -1,5 +1,9 @@
 package canbepalindrome
 
+func Run() {
+	CanBePalindrome("amadm")
+}
+
 func CanBePalindrome(str string) bool {
 	freq := map[rune]int{}
 
@@ -14,9 +18,5 @@ func CanBePalindrome(str string) bool {
 		}
 	}
 
-	if len(str)%2 == 0 {
-		return oddCount == 0
-	} else {
-		return oddCount%2 != 0
-	}
+	return oddCount <= 1
 }
